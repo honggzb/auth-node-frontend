@@ -20,10 +20,8 @@ export const authInterceptor: HttpInterceptorFn = (req, next) => {
       return authService.refresh().pipe(
         switchMap((res: any) => {
           authService.accessToken = res.token;
-          return next( authReq.clone({
-            setHeaders: {
-              Authorization: `Bearer ${authService.accessToken}`
-            }
+          return next(req.clone({
+            setHeaders: { Authorization: `Bearer ${authService.accessToken}` }
           }))
         })
       )
